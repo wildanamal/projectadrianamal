@@ -4,16 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Health Checker — Cek Kesehatan</title>
-  <script>
-    document.getElementById("submitBtn").addEventListener("click", function(e){
-      e.preventDefault();
-      const name = document.getElementById("name").value;
-      const age = document.getElementById("age").value;
-      const temp = document.getElementById("temp").value;
-      
-      alert(`Halo ${name}, usia ${age}, suhu tubuh ${temp}°C`);
-    });
-  </script>
   <style>
     /* ====== Reset & base ====== */
     *{box-sizing:border-box;margin:0;padding:0}
@@ -95,53 +85,58 @@
         <div class="card">
           <div class="section-title">Formulir Cek Kesehatan</div>
 
-          <div class="field">
-            <label for="name">Nama</label>
-            <input id="name" type="text" placeholder="Masukkan nama" />
-          </div>
-
-          <div class="row">
+          <form id="healthForm">
             <div class="field">
-              <label for="age">Usia</label>
-              <input id="age" type="number" min="0" placeholder="Umur (tahun)" />
+              <label for="name">Nama</label>
+              <input id="name" name="name" type="text" placeholder="Masukkan nama" />
             </div>
+      
+            <div class="row">
+              <div class="field">
+                <label for="age">Usia</label>
+                <input id="age" name="age" type="number" min="0" placeholder="Umur (tahun)" />
+              </div>
+              <div class="field">
+                <label for="gender">Jenis Kelamin</label>
+                <select id="gender" name="gender">
+                  <option value="">Pilih</option>
+                  <option value="male">Laki-laki</option>
+                  <option value="female">Perempuan</option>
+                  <option value="other">Lainnya</option>
+                </select>
+              </div>
+            </div>
+      
             <div class="field">
-              <label for="gender">Jenis Kelamin</label>
-              <select id="gender">
-                <option value="">Pilih</option>
-                <option value="male">Laki-laki</option>
-                <option value="female">Perempuan</option>
-                <option value="other">Lainnya</option>
-              </select>
+              <label>Keluhan / Gejala (pilih yang sesuai)</label>
+              <div class="checkbox-grid">
+                <label class="check"><input type="checkbox" name="symptom" value="fever" /> Demam</label>
+                <label class="check"><input type="checkbox" name="symptom" value="cough" /> Batuk</label>
+                <label class="check"><input type="checkbox" name="symptom" value="breath" /> Sesak Napas</label>
+                <label class="check"><input type="checkbox" name="symptom" value="sore" /> Sakit Tenggorokan</label>
+              </div>
             </div>
-          </div>
-
-          <div class="field">
-            <label>Keluhan / Gejala (pilih yang sesuai)</label>
-            <div class="checkbox-grid">
-              <label class="check"><input type="checkbox" value="fever" /> Demam</label>
-              <label class="check"><input type="checkbox" value="cough" /> Batuk</label>
-              <label class="check"><input type="checkbox" value="breath" /> Sesak Napas</label>
-              <label class="check"><input type="checkbox" value="sore" /> Sakit Tenggorokan</label>
+      
+            <div class="field">
+              <label for="temp">Suhu Tubuh (°C)</label>
+              <input id="temp" name="temp" type="number" step="0.1" placeholder="Contoh: 36.7" />
             </div>
-          </div>
-
-          <div class="field">
-            <label for="temp">Suhu Tubuh (°C)</label>
-            <input id="temp" type="number" step="0.1" placeholder="Contoh: 36.7" />
-          </div>
-
-          <div class="field">
-            <label for="notes">Catatan tambahan</label>
-            <textarea id="notes" placeholder="Riwayat penyakit, obat, atau catatan lain..."></textarea>
-          </div>
-
-          <div style="display:flex;gap:10px;margin-top:8px">
-            <button class="btn" id="submitBtn">Periksa</button>
-            <button class="btn ghost" id="resetBtn" type="button">Reset</button>
-          </div>
-
-          <p class="muted" style="margin-top:12px">Catatan: Ini bukan diagnosis medis. Gunakan hasil ini sebagai indikasi awal dan hubungi tenaga medis jika perlu.</p>
+      
+            <div class="field">
+              <label for="notes">Catatan tambahan</label>
+              <textarea id="notes" name="notes" placeholder="Riwayat penyakit, obat, atau catatan lain..."></textarea>
+            </div>
+      
+            <div style="display:flex;gap:10px;margin-top:8px">
+              <button class="btn" type="submit">Periksa</button>
+              <button class="btn ghost" type="reset">Reset</button>
+            </div>
+          </form>
+          <!-- akhir form -->
+      
+          <p class="muted" style="margin-top:12px">
+            Catatan: Ini bukan diagnosis medis. Gunakan hasil ini sebagai indikasi awal dan hubungi tenaga medis jika perlu.
+          </p>
         </div>
       </div>
 
@@ -195,5 +190,16 @@
   </div>
 
   <!-- NOTE: Belum ada JavaScript; nanti bisa ditambahkan untuk logika cek & interaksi -->
+  <script>
+    document.getElementById("healthForm").addEventListener("submit", function(e){
+      e.preventDefault(); // biar nggak reload
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
+      const temp = document.getElementById("temp").value;
+  
+      document.querySelector(".info .muted").innerText = 
+        `Halo ${name}, umur ${age}, suhu ${temp}°C.`;
+    });
+  </script>
 </body>
 </html>

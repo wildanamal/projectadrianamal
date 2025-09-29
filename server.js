@@ -21,11 +21,13 @@ app.post("/api/check", (req, res) => {
 
   if (temp >= 38 || symptom.includes("fever")) {
     risk = "sedang";
-    recommendation = "Anda mengalami demam. Perbanyak minum air, istirahat, dan pantau suhu tubuh.";
+    recommendation =
+      "Anda mengalami demam. Perbanyak minum air, istirahat, dan pantau suhu tubuh.";
   }
   if (temp >= 39 || symptom.includes("breath")) {
     risk = "tinggi";
-    recommendation = "Segera periksakan diri ke tenaga medis. Gejala serius terdeteksi.";
+    recommendation =
+      "Segera periksakan diri ke tenaga medis. Gejala serius terdeteksi.";
   }
 
   res.json({

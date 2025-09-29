@@ -44,5 +44,5 @@ app.post("/api/check", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server jalan di http://localhost:${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });

@@ -4,27 +4,43 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-// Middleware parsing
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve file HTML
+// Serve file frontend
 app.use(express.static(path.join(__dirname, "public")));
 
-// Endpoint menerima data
-app.post("/api/contact", (req, res) => {
-  const { name, email, message } = req.body;
+// Endpoint untuk proses form
+app.post("/api/check", (req, res) => {
+  const { name, age, gender, symptom = [], temp, notes } = req.body;
 
-  console.log("📩 Data masuk:");
-  console.log("Nama:", name);
-  console.log("Email:", email);
-  console.log("Pesan:", message);
+  // logika diagnosis sederhana
+  let risk = "rendah";
+  let recommendation = "Kondisi tampaknya normal. Tetap jaga pola hidup sehat.";
 
-  // Balikin ke frontend biar bisa dicek
-  res.json({ success: true, name, email, message });
+  if (temp >= 38 || symptom.includes("fever")) {
+    risk = "sedang";
+    recommendation = "Anda mengalami demam. Perbanyak minum air, istirahat, dan pantau suhu tubuh.";
+  }
+  if (temp >= 39 || symptom.includes("breath")) {
+    risk = "tinggi";
+    recommendation = "Segera periksakan diri ke tenaga medis. Gejala serius terdeteksi.";
+  }
+
+  res.json({
+    success: true,
+    name,
+    age,
+    gender,
+    temp,
+    symptoms: symptom,
+    notes,
+    risk,
+    recommendation,
+  });
 });
 
-// Jalankan server
 app.listen(PORT, () => {
   console.log(`🚀 Server jalan di http://localhost:${PORT}`);
 });

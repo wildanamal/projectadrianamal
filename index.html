@@ -4,6 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Health Checker — Cek Kesehatan</title>
+  <script>
+    document.getElementById("submitBtn").addEventListener("click", function(e){
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
+      const temp = document.getElementById("temp").value;
+      
+      alert(`Halo ${name}, usia ${age}, suhu tubuh ${temp}°C`);
+    });
+  </script>
   <style>
     /* ====== Reset & base ====== */
     *{box-sizing:border-box;margin:0;padding:0}
